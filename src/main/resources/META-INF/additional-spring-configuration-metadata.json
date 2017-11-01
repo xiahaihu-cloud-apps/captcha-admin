@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "app.captcha.storage.path",
+      "type": "java.lang.String",
+      "description": "验证码存储路径."
+    },
+    {
+      "name": "app.captcha.path.prefix",
+      "type": "java.lang.String",
+      "description": "验证码图片前缀."
+    }
+  ] }

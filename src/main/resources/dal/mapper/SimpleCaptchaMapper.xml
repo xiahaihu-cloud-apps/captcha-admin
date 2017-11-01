@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shearf.cloud.apps.captcha.admin.dal.mapper.SimpleCaptchaMapper">
+    <resultMap id="BaseResultMap" type="com.shearf.cloud.apps.captcha.admin.domain.model.SimpleCaptcha">
+        <id property="id" column="id" jdbcType="INTEGER" />
+        <result property="code" column="code" jdbcType="CHAR" />
+        <result property="imgUrl" column="img_url" jdbcType="VARCHAR" />
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`, `code`, `img_url`, `create_time`
+    </sql>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.shearf.cloud.apps.captcha.admin.domain.model.SimpleCaptcha">
+        INSERT INTO `captcha_simple_captcha` (`code`, `img_url`, `create_time`) VALUES (
+                #{code, jdbcType=CHAR}, #{imgUrl, jdbcType=VARCHAR}, #{createTime, jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <select id="get" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT <include refid="Base_Column_List" /> FROM `captcha_simple_captcha`
+    </select>
+
+    <insert id="insertBatch" parameterType="List">
+        INSERT INTO `captcha_simple_captcha` (`code`, `img_url`, `create_time`) VALUES
+            <foreach collection="list" open="(" close=")" item="item" separator=",">
+                #{item.code, jdbcType=CHAR}, #{item.imgUrl, jdbcType=VARCHAR}, #{item.createTime, jdbcType=TIMESTAMP}
+            </foreach>
+    </insert>
+</mapper>
