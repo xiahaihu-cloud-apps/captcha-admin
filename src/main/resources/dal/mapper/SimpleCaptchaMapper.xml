@@ -22,10 +22,39 @@
         SELECT <include refid="Base_Column_List" /> FROM `captcha_simple_captcha`
     </select>
 
+    <select id="queryAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM `captcha_simple_captcha`
+    </select>
+
+    <sql id="Base_Query_Param">
+        <if test="startTime != null">
+            AND `create_time` >= #{startTime, jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            AND `create_time` &lt; #{endTime, jdbcType=TIMESTAMP}
+        </if>
+    </sql>
+
+    <select id="queryByParam" resultMap="BaseResultMap" parameterType="com.shearf.cloud.apps.captcha.admin.domain.param.SimpleCaptchaQueryParam">
+        SELECT <include refid="Base_Column_List" /> FROM `captcha_simple_captcha`
+        <where>
+            <include refid="Base_Query_Param" />
+        </where>
+        ORDER BY `id` ASC
+    </select>
+
     <insert id="insertBatch" parameterType="List">
         INSERT INTO `captcha_simple_captcha` (`code`, `img_url`, `create_time`) VALUES
-            <foreach collection="list" open="(" close=")" item="item" separator=",">
-                #{item.code, jdbcType=CHAR}, #{item.imgUrl, jdbcType=VARCHAR}, #{item.createTime, jdbcType=TIMESTAMP}
+            <foreach collection="list" item="item" separator=",">
+                (#{item.code, jdbcType=CHAR}, #{item.imgUrl, jdbcType=VARCHAR}, #{item.createTime, jdbcType=TIMESTAMP})
             </foreach>
     </insert>
+
+    <select id="count" resultType="Long" parameterType="com.shearf.cloud.apps.captcha.admin.domain.param.SimpleCaptchaQueryParam">
+        SELECT COUNT(1) FROM `captcha_simple_captcha`
+        <where>
+            <include refid="Base_Query_Param" />
+        </where>
+    </select>
+
 </mapper>

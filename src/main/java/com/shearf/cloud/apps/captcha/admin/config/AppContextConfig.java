@@ -11,6 +11,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Repository;
 
 import java.awt.*;
@@ -20,6 +21,7 @@ import java.awt.*;
  */
 @Configuration
 @MapperScan(basePackages = "com.shearf.cloud.apps.captcha.admin.dal.mapper", annotationClass = Repository.class)
+@EnableScheduling
 public class AppContextConfig implements EnvironmentAware {
 
     private RelaxedPropertyResolver resolver;
@@ -43,6 +45,20 @@ public class AppContextConfig implements EnvironmentAware {
         ConfigValue configValue = new ConfigValue();
         configValue.setCaptchaStoragePath(resolver.getRequiredProperty("captcha.storage.path"));
         configValue.setCaptchaPathPrefix(resolver.getRequiredProperty("captcha.path.prefix"));
+        configValue.setDailyTotalCaptcha(
+                resolver.getProperty("captcha.daily.total", Integer.class ,100000));
+        configValue.setThreadCreateCaptchaNum(
+                resolver.getProperty("captcha.peer.create.number", Integer.class, 1000));
+        configValue.setThreadCacheCaptchaNum(
+                resolver.getProperty("captcha.peer.cache.number", Integer.class, 1000));
+        configValue.setCreateCaptchaPoolNum(
+                resolver.getProperty("captcha.create.pool.num", Integer.class,
+                        Runtime.getRuntime().availableProcessors() * 2 + 1));
+        configValue.setCacheCaptchaPoolNum(
+                resolver.getProperty("captcha.cache.pool.num", Integer.class,
+                        Runtime.getRuntime().availableProcessors() * 2 + 1));
+        configValue.setInitCaptcha(resolver.getProperty("captcha.init", Boolean.class, false));
+
         return configValue;
     }
 

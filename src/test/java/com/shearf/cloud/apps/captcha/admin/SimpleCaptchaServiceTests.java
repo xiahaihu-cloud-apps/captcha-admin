@@ -24,6 +24,7 @@ public class SimpleCaptchaServiceTests {
     @Commit
     @Test
     public void create() {
-        simpleCaptchaService.createByDate("20170612");
+        simpleCaptchaService.createByDate("20170612", 5);
     }
+
 }

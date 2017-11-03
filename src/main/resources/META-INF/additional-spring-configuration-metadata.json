@@ -9,5 +9,35 @@
       "name": "app.captcha.path.prefix",
       "type": "java.lang.String",
       "description": "验证码图片前缀."
+    },
+    {
+      "name": "app.captcha.peer.create.number",
+      "type": "java.lang.Integer",
+      "description": "每次创建验证码数量."
+    },
+    {
+      "name": "app.captcha.peer.cache.number",
+      "type": "java.lang.Integer",
+      "description": "每次缓存验证码数量."
+    },
+    {
+      "name": "app.captcha.daily.total",
+      "type": "java.lang.Integer",
+      "description": "每天生成验证码总数."
+    },
+    {
+      "name": "app.captcha.create.pool.num",
+      "type": "java.lang.Integer",
+      "description": "创建验证码的线程池大小."
+    },
+    {
+      "name": "app.captcha.cache.pool.num",
+      "type": "java.lang.Integer",
+      "description": "缓存验证码线程池大小."
+    },
+    {
+      "name": "app.captcha.init",
+      "type": "java.lang.Boolean",
+      "description": "是否初始化验证码."
     }
   ] }

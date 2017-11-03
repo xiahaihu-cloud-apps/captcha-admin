@@ -59,6 +59,8 @@ public class SimpleCaptchaServiceImpl extends AbstractGenericService<SimpleCaptc
 
     @Override
     public void createByDate(String date, int num) {
+        log.info("创建日期为{}, 数量为{}的简单验证码", date, num);
+
         List<SimpleCaptcha> simpleCaptchaList = new ArrayList<>(num);
 
         while (num-- > 0) {
@@ -69,11 +71,14 @@ public class SimpleCaptchaServiceImpl extends AbstractGenericService<SimpleCaptc
             String captchaRealPath = captchaRealDirPath + "/" + captchaFile;
 
             File captchaRealDir = new File(captchaRealDirPath);
-            if (!captchaRealDir.exists()) {
-                if (!captchaRealDir.mkdirs()) {
-                    log.error("创建验证码文件夹目录出错, 目录:{}", captchaRealDirPath);
+            synchronized (this) {
+                if (!captchaRealDir.exists()) {
+                    if (!captchaRealDir.mkdirs()) {
+                        log.error("创建验证码文件夹目录出错, 目录:{}", captchaRealDirPath);
+                    }
                 }
             }
+
 
             FileOutputStream fos = null;
             try {
@@ -82,7 +87,7 @@ public class SimpleCaptchaServiceImpl extends AbstractGenericService<SimpleCaptc
                 String code = EncoderHelper.getChallangeAndWriteImage(captchaService, "png", fos);
                 SimpleCaptcha simpleCaptcha = new SimpleCaptcha();
                 simpleCaptcha.setCode(code);
-                simpleCaptcha.setImgUrl(configValue.getCaptchaPathPrefix() + captchaPath);
+                simpleCaptcha.setImgUrl(captchaPath);
                 simpleCaptcha.setCreateTime(new Date());
 
                 simpleCaptchaList.add(simpleCaptcha);
@@ -100,19 +105,5 @@ public class SimpleCaptchaServiceImpl extends AbstractGenericService<SimpleCaptc
             }
         }
         insert(simpleCaptchaList);
-    }
-
-    private String createRandomCaptchaImagePath(final String basePath, final String realBasePath, final String ext) {
-        Date now = new Date();
-        String today = DateFormatUtils.format(now, "yyyyMMdd");
-        String captchaDirPath = realBasePath + "/" + today;
-        File captchaDir = new File(captchaDirPath);
-        if (!captchaDir.exists()) {
-            if (!captchaDir.mkdirs()) {
-                log.error("创建验证码文件夹目录出错, 目录:{}", captchaDirPath);
-            }
-        }
-        String fileName = UUID.randomUUID().toString().trim().replaceAll("-", "");
-        return basePath + "/" + today + "/" + fileName + ext;
     }
 }
