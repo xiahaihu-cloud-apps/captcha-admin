@@ -1,6 +1,7 @@
 package com.shearf.cloud.apps.captcha.admin.dal.mapper;
 
 import com.shearf.cloud.apps.captcha.admin.domain.model.SimpleCaptcha;
+import com.shearf.cloud.apps.captcha.admin.domain.param.SimpleCaptchaQueryParam;
 import com.shearf.cloud.apps.commons.foundation.mybatis.IGenericMapper;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SimpleCaptchaMapper extends IGenericMapper<SimpleCaptcha, Integer> {
 
+    int deleteByParam(SimpleCaptchaQueryParam param);
 }

@@ -40,6 +40,9 @@ public class SimpleCaptchaJob implements InitializingBean {
     public void createDailyCaptcha() {
         log.info("执行创建简单验证码的任务");
 
+        // 删除当天已经添加的验证码记录，反正重复生成数据
+        simpleCaptchaService.deleteTodayCaptcha();
+
         ExecutorService executorService = Executors.newFixedThreadPool(configValue.getCreateCaptchaPoolNum());
         int total = configValue.getDailyTotalCaptcha();
         int peer = configValue.getThreadCreateCaptchaNum();

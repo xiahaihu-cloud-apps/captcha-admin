@@ -17,6 +17,12 @@
                 #{code, jdbcType=CHAR}, #{imgUrl, jdbcType=VARCHAR}, #{createTime, jdbcType=TIMESTAMP}
         )
     </insert>
+    <delete id="deleteByParam" parameterType="com.shearf.cloud.apps.captcha.admin.domain.param.SimpleCaptchaQueryParam">
+        DELETE FROM `captcha_simple_captcha`
+        <where>
+            <include refid="Base_Query_Param" />
+        </where>
+    </delete>
 
     <select id="get" resultMap="BaseResultMap" parameterType="Integer">
         SELECT <include refid="Base_Column_List" /> FROM `captcha_simple_captcha`

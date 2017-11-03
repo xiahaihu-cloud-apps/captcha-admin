@@ -32,4 +32,9 @@ public interface SimpleCaptchaService extends IGenericService<SimpleCaptcha, Int
      * @param num
      */
     void createByDate(String date, int num);
+
+    /**
+     * 删除今日创建的验证码
+     */
+    void deleteTodayCaptcha();
 }

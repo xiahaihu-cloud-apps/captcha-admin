@@ -5,10 +5,12 @@ import com.github.bingoohuang.patchca.utils.encoder.EncoderHelper;
 import com.shearf.cloud.apps.captcha.admin.dal.mapper.SimpleCaptchaMapper;
 import com.shearf.cloud.apps.captcha.admin.domain.bean.ConfigValue;
 import com.shearf.cloud.apps.captcha.admin.domain.model.SimpleCaptcha;
+import com.shearf.cloud.apps.captcha.admin.domain.param.SimpleCaptchaQueryParam;
 import com.shearf.cloud.apps.captcha.admin.service.SimpleCaptchaService;
 import com.shearf.cloud.apps.commons.foundation.mybatis.AbstractGenericService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -105,5 +107,16 @@ public class SimpleCaptchaServiceImpl extends AbstractGenericService<SimpleCaptc
             }
         }
         insert(simpleCaptchaList);
+    }
+
+    @Override
+    public void deleteTodayCaptcha() {
+        SimpleCaptchaQueryParam param = new SimpleCaptchaQueryParam();
+        DateTime nowDateTime = new DateTime();
+        DateTime startDateTime = nowDateTime.withTimeAtStartOfDay();
+        DateTime endDateTime = startDateTime.plusDays(1);
+        param.setStartTime(startDateTime.toDate());
+        param.setEndTime(endDateTime.toDate());
+        simpleCaptchaMapper.deleteByParam(param);
     }
 }
