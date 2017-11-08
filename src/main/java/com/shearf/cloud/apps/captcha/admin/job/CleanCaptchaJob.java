@@ -14,7 +14,9 @@ import java.io.File;
 import java.util.Date;
 
 /**
- * Created by xiahaihu2009@gmail on 2017/11/4.
+ *
+ * @author xiahaihu2009@gmail
+ * @date 2017/11/4
  */
 @Component
 @Slf4j
@@ -22,9 +24,6 @@ public class CleanCaptchaJob {
 
     @Resource
     private SimpleCaptchaMapper simpleCaptchaMapper;
-
-    @Resource
-    private SimpleCaptchaService simpleCaptchaService;
 
     @Resource
     private ConfigValue configValue;

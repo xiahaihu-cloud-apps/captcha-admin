@@ -11,5 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SimpleCaptchaMapper extends IGenericMapper<SimpleCaptcha, Integer> {
 
+    /**
+     * 根据时间范围对验证码进行删除
+     *
+     * @param param
+     * @return
+     */
     int deleteByParam(SimpleCaptchaQueryParam param);
 }
