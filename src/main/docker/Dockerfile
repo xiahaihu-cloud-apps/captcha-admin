@@ -1,5 +1,5 @@
 FROM java:8
-VOLUME /tmp
+VOLUME /tmp /data
 RUN mkdir /app
 ADD captcha-admin-0.0.1-SNAPSHOT.jar /app/app.jar
 ADD runboot.sh /app/
