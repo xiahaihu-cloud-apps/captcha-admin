@@ -39,5 +39,15 @@
       "name": "app.captcha.init",
       "type": "java.lang.Boolean",
       "description": "是否初始化验证码."
+    },
+    {
+      "name": "database.ip",
+      "type": "java.lang.String",
+      "description": "数据库连接的IP."
+    },
+    {
+      "name": "database.port",
+      "type": "java.lang.Integer",
+      "description": "数据库连接的端口."
     }
   ] }
