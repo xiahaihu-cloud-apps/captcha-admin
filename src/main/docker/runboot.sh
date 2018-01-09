@@ -9,4 +9,5 @@ java -Ddatabase.ip=${DATABASE_IP} \
     -Dfile.encoding=UTF-8 \
     -Duser.timezone=Asia/Shanghai \
     -server \
+    "$@" \
     -jar /app/app.jar
