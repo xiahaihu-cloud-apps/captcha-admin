@@ -8,6 +8,5 @@ java -Ddatabase.ip=${DATABASE_IP} \
     -Dspring.redis.host=${REDIS_HOST} \
     -Dfile.encoding=UTF-8 \
     -Duser.timezone=Asia/Shanghai \
-    -server \
-    "$@" \
+    ${JAVA_OPTS} \
     -jar /app/app.jar
