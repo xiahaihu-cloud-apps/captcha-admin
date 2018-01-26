@@ -61,7 +61,7 @@ public class SimpleCaptchaServiceImpl extends AbstractGenericService<SimpleCaptc
 
     @Override
     public void createByDate(String date, int num) {
-        log.info("创建日期为{}, 数量为{}的简单验证码", date, num);
+        log.debug("创建日期为{}, 数量为{}的简单验证码", date, num);
 
         List<SimpleCaptcha> simpleCaptchaList = new ArrayList<>(num);
 
