@@ -95,7 +95,7 @@ public class SimpleCaptchaServiceImpl extends AbstractGenericService<SimpleCaptc
                 simpleCaptchaList.add(simpleCaptcha);
 
             } catch (IOException e) {
-                log.error("创建验证码图片失败, imageFile:{}", captchaRealPath);
+                log.error("创建验证码图片失败, imageFile:{}, {}", captchaRealPath, e);
             } finally {
                 try {
                     if (fos != null) {
