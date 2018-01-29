@@ -3,9 +3,9 @@ package com.shearf.cloud.apps.captcha.admin.job;
 import com.shearf.cloud.apps.captcha.admin.dal.mapper.SimpleCaptchaMapper;
 import com.shearf.cloud.apps.captcha.admin.domain.bean.ConfigValue;
 import com.shearf.cloud.apps.captcha.admin.domain.param.SimpleCaptchaQueryParam;
-import com.shearf.cloud.apps.captcha.admin.service.SimpleCaptchaService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -52,8 +52,22 @@ public class CleanCaptchaJob {
                     try {
                         int dirNum = Integer.valueOf(file.getName());
                         if (dirNum <= dirDateNumber) {
+                            String[] captchaFileNames = file.list();
+                            if (captchaFileNames != null && captchaFileNames.length > 0) {
+                                for (String captchaFilename : captchaFileNames) {
+                                    File captchaFile = new File(file.getAbsolutePath() + "/" + captchaFilename);
+                                    if (!captchaFile.delete()) {
+                                        log.error("删除验证码文件失败, {}", file.getAbsolutePath() + "/" + captchaFilename);
+                                    } else {
+                                        log.debug("删除验证码文件成功, {}", file.getAbsolutePath() + "/" + captchaFilename);
+                                    }
+                                }
+                            }
+                            // 删除目录
                             if (!file.delete()) {
                                 log.error("删除验证码目录失败, {}", file.getAbsolutePath());
+                            } else {
+                                log.info("删除验证码目录, {}", file.getAbsolutePath());
                             }
                         }
                     } catch (NumberFormatException ignored) {
